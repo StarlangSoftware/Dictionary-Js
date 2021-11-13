@@ -1,6 +1,6 @@
 {
   "name": "nlptoolkit-dictionary",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Turkish Dictionary",
   "main": "index.js",
   "types": "index.js",
