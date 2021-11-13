@@ -79,3 +79,74 @@ Steps for opening the cloned project:
 * Choose `Dictionary-Js` file
 * Select open as project option
 * Couple of seconds, dependencies will be downloaded. 
+
+Detailed Description
+============
+
++ [TxtDictionary](#txtdictionary)
++ [TxtWord](#txtword)
++ [SyllableList](#syllablelist)
+
+## TxtDictionary
+
+Dictionary is used in order to load Turkish dictionary or a domain specific dictionary. In addition, misspelled words and the true forms of the misspelled words can also be loaded. 
+
+To load the Turkish dictionary and the misspelled words dictionary,
+
+	a = TxtDictionary()
+	
+To load the domain specific dictionary and the misspelled words dictionary,
+
+	constructor(comparator: WordComparator = WordComparator.TURKISH,
+                fileName: string = "turkish_dictionary.txt",
+                misspelledFileName: string = "turkish_misspellings.txt")
+
+And to see if the dictionary involves a specific word, Word getWord is used.
+
+	getWord(nameOrIndex: any): Word
+
+## TxtWord
+
+The word features:
+To see whether the TxtWord class of the dictionary is a noun or not,
+
+	isNominal(): boolean
+
+To see whether it is an adjective,
+
+	isAdjective(): boolean
+
+To see whether it is a portmanteau word,
+
+	isPortmanteau(): boolean
+
+To see whether it obeys vowel harmony,
+
+	notObeysVowelHarmonyDuringAgglutination(): boolean
+
+And, to see whether it softens when it get affixes, the following is used.
+
+	rootSoftenDuringSuffixation(): boolean
+
+## SyllableList
+
+To syllabify the word, SyllableList class is used.
+
+	constructor(word: string)
+
+# Cite
+
+	@inproceedings{yildiz-etal-2019-open,
+    	title = "An Open, Extendible, and Fast {T}urkish Morphological Analyzer",
+    	author = {Y{\i}ld{\i}z, Olcay Taner  and
+      	Avar, Beg{\"u}m  and
+      	Ercan, G{\"o}khan},
+    	booktitle = "Proceedings of the International Conference on Recent Advances in Natural Language Processing (RANLP 2019)",
+    	month = sep,
+    	year = "2019",
+    	address = "Varna, Bulgaria",
+    	publisher = "INCOMA Ltd.",
+    	url = "https://www.aclweb.org/anthology/R19-1156",
+    	doi = "10.26615/978-954-452-056-4_156",
+    	pages = "1364--1372",
+	}
