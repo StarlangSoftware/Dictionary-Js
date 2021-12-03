@@ -18,6 +18,14 @@ export class TxtWord extends Word{
         }
     }
 
+    clone(): TxtWord{
+        let copy = new TxtWord(this.name);
+        for (let i = 0; i < this.flags.length; i++) {
+            copy.addFlag(this.flags[i]);
+        }
+        return copy;
+    }
+
     /**
      * The addFlag method takes a String flag as an input and adds given flag to the flags {@link ArrayList}.
      *

@@ -9,6 +9,7 @@ export declare class TxtWord extends Word {
      * @param flag String input.
      */
     constructor(name: string, flag?: string);
+    clone(): TxtWord;
     /**
      * The addFlag method takes a String flag as an input and adds given flag to the flags {@link ArrayList}.
      *
