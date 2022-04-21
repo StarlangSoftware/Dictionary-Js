@@ -31,6 +31,29 @@ export declare class Word {
      */
     setName(name: string): void;
     /**
+     * The beforeLastVowel method takes a {@link String} stem as an input. It loops through the given stem and returns
+     * the second last vowel.
+     *
+     * @param stem String input.
+     * @return Vowel before the last vowel.
+     */
+    static beforeLastVowel(stem: string): string;
+    /**
+     * The lastVowel method takes a {@link String} stem as an input. It loops through the given stem and returns
+     * the last vowel.
+     *
+     * @param stem String input.
+     * @return the last vowel.
+     */
+    static lastVowel(stem: string): string;
+    /**
+     * The lastPhoneme method takes a {@link String} stem as an input. It then returns the last phoneme of the given stem.
+     *
+     * @param stem String input.
+     * @return the last phoneme.
+     */
+    static lastPhoneme(stem: string): string;
+    /**
      * The isCapital method takes a String surfaceForm as an input and returns true if the character at first index of surfaceForm
      * is a capital letter, false otherwise.
      *
