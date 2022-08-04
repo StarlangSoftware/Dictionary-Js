@@ -39,7 +39,7 @@ export class Dictionary {
                 hi = mid - 1
             }
         }
-        return -lo
+        return -(lo + 1)
     }
 
     /**
@@ -124,7 +124,7 @@ export class Dictionary {
         if (middle >= 0) {
             return middle;
         } else {
-            return -middle;
+            return -middle - 1;
         }
     }
 }

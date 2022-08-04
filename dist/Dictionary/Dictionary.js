@@ -43,7 +43,7 @@
                     hi = mid - 1;
                 }
             }
-            return -lo;
+            return -(lo + 1);
         }
         /**
          * The getWord method takes a String name as an input and performs binary search within words {@link Array} and assigns the result
@@ -124,7 +124,7 @@
                 return middle;
             }
             else {
-                return -middle;
+                return -middle - 1;
             }
         }
     }

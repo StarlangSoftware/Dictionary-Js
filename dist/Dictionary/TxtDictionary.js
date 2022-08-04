@@ -171,7 +171,7 @@
             if (this.getWord(name.toLocaleLowerCase("tr")) == undefined) {
                 let word = new TxtWord_1.TxtWord(name.toLocaleLowerCase("tr"));
                 word.addFlag(flag);
-                let insertIndex = this.binarySearch(word) - 1;
+                let insertIndex = -this.binarySearch(word) - 1;
                 if (insertIndex >= 0) {
                     this.words.splice(insertIndex, 0, word);
                 }

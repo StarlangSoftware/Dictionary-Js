@@ -49,6 +49,8 @@ describe('DictionaryTest', function() {
             assert.strictEqual(21, dictionary.longestWordSize());
         });
         it('testGetWordStartingWith', function() {
+            assert.strictEqual(0, lowerCaseDictionary.getWordStartingWith("a"));
+            assert.strictEqual(1, lowerCaseDictionary.getWordStartingWith("b"));
             assert.strictEqual(20, lowerCaseDictionary.getWordStartingWith("q"));
             assert.strictEqual(27, lowerCaseDictionary.getWordStartingWith("w"));
             assert.strictEqual(27, lowerCaseDictionary.getWordStartingWith("x"));
