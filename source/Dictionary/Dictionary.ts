@@ -1,6 +1,5 @@
 import {Word} from "./Word";
 import {WordComparator} from "./WordComparator";
-import {VectorizedWord} from "./VectorizedWord";
 
 export class Dictionary {
 

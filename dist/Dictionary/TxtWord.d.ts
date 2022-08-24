@@ -1,6 +1,7 @@
 import { Word } from "./Word";
 export declare class TxtWord extends Word {
     private flags;
+    private morphology;
     /**
      * A constructor of {@link TxtWord} class which takes a String name as an input and calls its super class {@link Word}
      * with given name. Then, creates a new {@link Array} as flags.
@@ -22,6 +23,8 @@ export declare class TxtWord extends Word {
      * @param flag String input to remove.
      */
     removeFlag(flag: string): void;
+    setMorphology(morphology: string): void;
+    getMorphology(): string;
     /**
      * The verbType method checks flags {@link Array} and returns the corresponding cases.
      *

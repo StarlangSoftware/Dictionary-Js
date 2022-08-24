@@ -25,12 +25,14 @@
          * @param fileName   String input.
          * @param comparator {@link WordComparator} input.
          * @param misspelledFileName String input.
+         * @param morphologicalLexicon String input.
          */
-        constructor(comparator = WordComparator_1.WordComparator.TURKISH, fileName = "turkish_dictionary.txt", misspelledFileName = "turkish_misspellings.txt") {
+        constructor(comparator = WordComparator_1.WordComparator.TURKISH, fileName = "turkish_dictionary.txt", misspelledFileName = "turkish_misspellings.txt", morphologicalLexicon = "turkish_morphological_lexicon.txt") {
             super(comparator);
             this.misspelledWords = new Map();
             this.loadFromText(fileName);
             this.loadMisspelledWords(misspelledFileName);
+            this.loadMorphologicalLexicon(morphologicalLexicon);
         }
         /**
          * The loadFromText method takes a String filename as an input. It reads given file line by line and splits
@@ -67,6 +69,19 @@
                 let list = line.split(" ");
                 if (list.length == 2) {
                     this.misspelledWords.set(list[0], list[1]);
+                }
+            }
+        }
+        loadMorphologicalLexicon(fileName) {
+            let data = fs.readFileSync(fileName, 'utf8');
+            let lines = data.split("\n");
+            for (let line of lines) {
+                let list = line.split(" ");
+                if (list.length == 2) {
+                    let word = this.getWord(list[0]);
+                    if (word != undefined) {
+                        word.setMorphology(list[1]);
+                    }
                 }
             }
         }

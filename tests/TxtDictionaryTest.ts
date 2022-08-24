@@ -1,6 +1,7 @@
 import {TxtDictionary} from "../dist/Dictionary/TxtDictionary";
 import * as assert from "assert";
 import {Word} from "../dist/Dictionary/Word";
+import {TxtWord} from "../dist/Dictionary/TxtWord";
 
 describe('TxtDictionaryTest', function() {
     describe('TxtDictionaryTest', function() {
@@ -9,6 +10,12 @@ describe('TxtDictionaryTest', function() {
             for (let i = 0; i < dictionary.size(); i++){
                 assert.strictEqual(undefined, dictionary.getCorrectForm(dictionary.getWord(i).getName()));
             }
+        });
+        it('testMorphology', function() {
+            assert.strictEqual("ab", (<TxtWord> dictionary.getWord("ab")).getMorphology());
+            assert.strictEqual("çarp+HcH+lHk", (<TxtWord> dictionary.getWord("çarpıcılık")).getMorphology());
+            assert.strictEqual("aciz+lAş+yAbil+mA", (<TxtWord> dictionary.getWord("âcizleşebilme")).getMorphology());
+            assert.strictEqual("ak+Hş+GAn+lAş+DHr+HCH+lHk", (<TxtWord> dictionary.getWord("akışkanlaştırıcılık")).getMorphology());
         });
         it('testPrepareTrie', function() {
             let trie = dictionary.prepareTrie();

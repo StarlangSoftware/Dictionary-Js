@@ -17,13 +17,16 @@ export class TxtDictionary extends Dictionary{
      * @param fileName   String input.
      * @param comparator {@link WordComparator} input.
      * @param misspelledFileName String input.
+     * @param morphologicalLexicon String input.
      */
     constructor(comparator: WordComparator = WordComparator.TURKISH,
                 fileName: string = "turkish_dictionary.txt",
-                misspelledFileName: string = "turkish_misspellings.txt") {
+                misspelledFileName: string = "turkish_misspellings.txt",
+                morphologicalLexicon: string = "turkish_morphological_lexicon.txt") {
         super(comparator)
         this.loadFromText(fileName)
         this.loadMisspelledWords(misspelledFileName)
+        this.loadMorphologicalLexicon(morphologicalLexicon)
     }
 
     /**
@@ -62,6 +65,20 @@ export class TxtDictionary extends Dictionary{
             let list = line.split(" ")
             if (list.length == 2){
                 this.misspelledWords.set(list[0], list[1])
+            }
+        }
+    }
+
+    private loadMorphologicalLexicon(fileName: string){
+        let data = fs.readFileSync(fileName, 'utf8')
+        let lines = data.split("\n")
+        for (let line of lines){
+            let list = line.split(" ")
+            if (list.length == 2){
+                let word = <TxtWord>this.getWord(list[0])
+                if (word != undefined){
+                    word.setMorphology(list[1])
+                }
             }
         }
     }

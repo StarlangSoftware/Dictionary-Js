@@ -12,8 +12,9 @@ export declare class TxtDictionary extends Dictionary {
      * @param fileName   String input.
      * @param comparator {@link WordComparator} input.
      * @param misspelledFileName String input.
+     * @param morphologicalLexicon String input.
      */
-    constructor(comparator?: WordComparator, fileName?: string, misspelledFileName?: string);
+    constructor(comparator?: WordComparator, fileName?: string, misspelledFileName?: string, morphologicalLexicon?: string);
     /**
      * The loadFromText method takes a String filename as an input. It reads given file line by line and splits
      * according to space and assigns each word to the String array. Then, adds these word with their flags to the
@@ -29,6 +30,7 @@ export declare class TxtDictionary extends Dictionary {
      * @param fileName File stream input.
      */
     private loadMisspelledWords;
+    private loadMorphologicalLexicon;
     /**
      * The addNumber method takes a String name and calls addWithFlag method with given name and IS_SAYI flag.
      *

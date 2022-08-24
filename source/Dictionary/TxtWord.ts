@@ -3,6 +3,7 @@ import {Word} from "./Word";
 export class TxtWord extends Word{
 
     private flags: Array<string> = []
+    private morphology: string
 
     /**
      * A constructor of {@link TxtWord} class which takes a String name as an input and calls its super class {@link Word}
@@ -42,6 +43,14 @@ export class TxtWord extends Word{
      */
     removeFlag(flag: string){
         this.flags.splice(this.flags.indexOf(flag), 1)
+    }
+
+    setMorphology(morphology: string){
+        this.morphology = morphology
+    }
+
+    getMorphology(): string{
+        return this.morphology
     }
 
     /**

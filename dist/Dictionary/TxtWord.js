@@ -49,6 +49,12 @@
         removeFlag(flag) {
             this.flags.splice(this.flags.indexOf(flag), 1);
         }
+        setMorphology(morphology) {
+            this.morphology = morphology;
+        }
+        getMorphology() {
+            return this.morphology;
+        }
         /**
          * The verbType method checks flags {@link Array} and returns the corresponding cases.
          *
