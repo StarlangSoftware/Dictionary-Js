@@ -12,13 +12,13 @@ export declare class TxtWord extends Word {
     constructor(name: string, flag?: string);
     clone(): TxtWord;
     /**
-     * The addFlag method takes a String flag as an input and adds given flag to the flags {@link ArrayList}.
+     * The addFlag method takes a String flag as an input and adds given flag to the flags {@link Array}.
      *
      * @param flag String input to add.
      */
     addFlag(flag: string): void;
     /**
-     * The removeFlag method takes a String flag as an input and removes given flag from the flags {@link ArrayList}.
+     * The removeFlag method takes a String flag as an input and removes given flag from the flags {@link Array}.
      *
      * @param flag String input to remove.
      */
@@ -83,6 +83,18 @@ export declare class TxtWord extends Word {
      * @return true if flags {@link Array} contains IS_DUP.
      */
     isDuplicate(): boolean;
+    /**
+     * The isDuplicate method returns true if flags {@link Array} contains IS_CODE.
+     *
+     * @return true if flags {@link Array} contains IS_CODE.
+     */
+    isCode(): boolean;
+    /**
+     * The isDuplicate method returns true if flags {@link Array} contains IS_METRIC.
+     *
+     * @return true if flags {@link Array} contains IS_METRIC.
+     */
+    isMetric(): boolean;
     /**
      * The isHeader method returns true if flags {@link Array} contains IS_HEADER.
      *

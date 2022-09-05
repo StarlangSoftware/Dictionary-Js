@@ -34,7 +34,7 @@
             return copy;
         }
         /**
-         * The addFlag method takes a String flag as an input and adds given flag to the flags {@link ArrayList}.
+         * The addFlag method takes a String flag as an input and adds given flag to the flags {@link Array}.
          *
          * @param flag String input to add.
          */
@@ -42,7 +42,7 @@
             this.flags.push(flag);
         }
         /**
-         * The removeFlag method takes a String flag as an input and removes given flag from the flags {@link ArrayList}.
+         * The removeFlag method takes a String flag as an input and removes given flag from the flags {@link Array}.
          *
          * @param flag String input to remove.
          */
@@ -307,6 +307,22 @@
              *IS_DUP: The bare-form is part of a duplicate form. e.g. Abuk
              */
             return this.flags.includes("IS_DUP");
+        }
+        /**
+         * The isDuplicate method returns true if flags {@link Array} contains IS_CODE.
+         *
+         * @return true if flags {@link Array} contains IS_CODE.
+         */
+        isCode() {
+            return this.flags.includes("IS_CODE");
+        }
+        /**
+         * The isDuplicate method returns true if flags {@link Array} contains IS_METRIC.
+         *
+         * @return true if flags {@link Array} contains IS_METRIC.
+         */
+        isMetric() {
+            return this.flags.includes("IS_METRIC");
         }
         /**
          * The isHeader method returns true if flags {@link Array} contains IS_HEADER.
