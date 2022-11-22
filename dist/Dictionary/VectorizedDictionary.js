@@ -4,7 +4,7 @@
         if (v !== undefined) module.exports = v;
     }
     else if (typeof define === "function" && define.amd) {
-        define(["require", "exports", "./Dictionary", "./VectorizedWord", "nlptoolkit-math/dist/Vector"], factory);
+        define(["require", "exports", "./Dictionary", "./VectorizedWord", "nlptoolkit-math/dist/Vector", "fs"], factory);
     }
 })(function (require, exports) {
     "use strict";
@@ -13,14 +13,16 @@
     const Dictionary_1 = require("./Dictionary");
     const VectorizedWord_1 = require("./VectorizedWord");
     const Vector_1 = require("nlptoolkit-math/dist/Vector");
+    const fs = require("fs");
     class VectorizedDictionary extends Dictionary_1.Dictionary {
         /**
          * A constructor of {@link VectorizedDictionary} class which takes a {@link WordComparator} as an input and calls its
          * super class {@link Dictionary} with {@link WordComparator} input.
          *
          * @param comparator {@link WordComparator} type input.
+         * @param fileName Name of the file to be read
          */
-        constructor(comparator) {
+        constructor(comparator, fileName = undefined) {
             super(comparator);
             /**
              * The vectorComparator method takes two {@link VectorizedWord}s as inputs and finds out the dot products as result1
@@ -35,6 +37,20 @@
              */
             this.vectorComparator = (word) => (a, b) => word.getVector().cosineSimilarity(b.getVector()) -
                 word.getVector().cosineSimilarity(a.getVector());
+            if (fileName != undefined) {
+                let data = fs.readFileSync(fileName, 'utf8');
+                let lines = data.split("\n");
+                for (let line of lines) {
+                    let items = line.split(" ");
+                    let vector = new Vector_1.Vector(0, 0);
+                    for (let i = 1; i < items.length; i++) {
+                        vector.add(parseFloat(items[i]));
+                    }
+                    let vectorizedWord = new VectorizedWord_1.VectorizedWord(items[0], vector);
+                    this.words.push(vectorizedWord);
+                }
+                this.words.sort(this.wordComparator(this.comparator));
+            }
         }
         /**
          * The addWord method takes a {@link VectorizedWord} as an input and adds it to the words {@link Array}.
@@ -79,7 +95,7 @@
         /**
          * The mostSimilarKWords method takes a String name and an integer k as inputs, and creates an {@link Array} resultWords
          * of type {@link VectorizedWord} and a {@link VectorizedWord} word by getting the given name from words {@link Array}.
-         * Then, it loops through the words {@link Array} and adds current word to the resultWords. It then sort resultWords {@link Array}
+         * Then, it loops through the words {@link Array} and adds current word to the resultWords. It then sorts resultWords {@link Array}
          * and if the size of the {@link Array} is greater than given input k, it removes items from the ending. Then, it returns
          * resultWords {@link Array}.
          *

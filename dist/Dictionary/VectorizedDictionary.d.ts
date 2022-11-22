@@ -7,8 +7,9 @@ export declare class VectorizedDictionary extends Dictionary {
      * super class {@link Dictionary} with {@link WordComparator} input.
      *
      * @param comparator {@link WordComparator} type input.
+     * @param fileName Name of the file to be read
      */
-    constructor(comparator: WordComparator);
+    constructor(comparator: WordComparator, fileName?: string);
     /**
      * The addWord method takes a {@link VectorizedWord} as an input and adds it to the words {@link Array}.
      *
@@ -41,7 +42,7 @@ export declare class VectorizedDictionary extends Dictionary {
     /**
      * The mostSimilarKWords method takes a String name and an integer k as inputs, and creates an {@link Array} resultWords
      * of type {@link VectorizedWord} and a {@link VectorizedWord} word by getting the given name from words {@link Array}.
-     * Then, it loops through the words {@link Array} and adds current word to the resultWords. It then sort resultWords {@link Array}
+     * Then, it loops through the words {@link Array} and adds current word to the resultWords. It then sorts resultWords {@link Array}
      * and if the size of the {@link Array} is greater than given input k, it removes items from the ending. Then, it returns
      * resultWords {@link Array}.
      *

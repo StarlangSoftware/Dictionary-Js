@@ -2,6 +2,7 @@ import {Dictionary} from "./Dictionary";
 import {WordComparator} from "./WordComparator";
 import {VectorizedWord} from "./VectorizedWord";
 import {Vector} from "nlptoolkit-math/dist/Vector";
+import * as fs from "fs";
 
 export class VectorizedDictionary extends Dictionary{
 
@@ -10,9 +11,24 @@ export class VectorizedDictionary extends Dictionary{
      * super class {@link Dictionary} with {@link WordComparator} input.
      *
      * @param comparator {@link WordComparator} type input.
+     * @param fileName Name of the file to be read
      */
-    constructor(comparator: WordComparator) {
+    constructor(comparator: WordComparator, fileName: string = undefined) {
         super(comparator);
+        if (fileName != undefined){
+            let data = fs.readFileSync(fileName, 'utf8')
+            let lines = data.split("\n")
+            for (let line of lines){
+                let items = line.split(" ")
+                let vector = new Vector(0, 0)
+                for (let i = 1; i < items.length; i++){
+                    vector.add(parseFloat(items[i]))
+                }
+                let vectorizedWord = new VectorizedWord(items[0], vector)
+                this.words.push(vectorizedWord)
+            }
+            this.words.sort(this.wordComparator(this.comparator))
+        }
     }
 
     /**
@@ -75,7 +91,7 @@ export class VectorizedDictionary extends Dictionary{
     /**
      * The mostSimilarKWords method takes a String name and an integer k as inputs, and creates an {@link Array} resultWords
      * of type {@link VectorizedWord} and a {@link VectorizedWord} word by getting the given name from words {@link Array}.
-     * Then, it loops through the words {@link Array} and adds current word to the resultWords. It then sort resultWords {@link Array}
+     * Then, it loops through the words {@link Array} and adds current word to the resultWords. It then sorts resultWords {@link Array}
      * and if the size of the {@link Array} is greater than given input k, it removes items from the ending. Then, it returns
      * resultWords {@link Array}.
      *
