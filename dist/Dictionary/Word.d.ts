@@ -97,6 +97,7 @@ export declare class Word {
      * @return true if it equals to one of the dolar, sterlin, paunt, ons, ruble, mark, frank, yan, sent, yen' or $, and false otherwise.
      */
     static isMoney(surfaceForm: string): boolean;
+    static toCapital(surfaceForm: string): string;
     /**
      * The isPunctuation method without any argument, it checks name variable whether it is a punctuation or not and
      * returns true if so.

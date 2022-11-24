@@ -183,6 +183,10 @@ export class Word {
             lowerCase.startsWith("cent") || lowerCase.startsWith("yen'") || lowerCase.includes("$")
     }
 
+    static toCapital(surfaceForm: string): string{
+        return surfaceForm.substring(0, 1).toLocaleUpperCase("tr") + surfaceForm.substring(1)
+    }
+
     /**
      * The isPunctuation method without any argument, it checks name variable whether it is a punctuation or not and
      * returns true if so.

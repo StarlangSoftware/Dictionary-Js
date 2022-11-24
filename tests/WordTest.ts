@@ -27,6 +27,11 @@ describe('WordTest', function() {
             assert.ok(!Word.isCapital("üretici"))
             assert.ok(Word.isCapital("Üretici"))
         });
+        it('testToCapital', function() {
+            assert.strictEqual("Ali", Word.toCapital("ali"))
+            assert.strictEqual("İlginç", Word.toCapital("ilginç"))
+            assert.strictEqual("Ç", Word.toCapital("ç"))
+        });
         it('testIsPunctuation', function() {
             assert.ok(Word.isPunctuation("."));
             assert.ok(Word.isPunctuation("..."));
