@@ -40,7 +40,7 @@ For Developers
 ============
 
 You can also see [Python](https://github.com/starlangsoftware/Dictionary-Py), [Cython](https://github.com/starlangsoftware/Dictionary-Cy), 
-[C++](https://github.com/starlangsoftware/Dictionary-CPP), [Swift](https://github.com/starlangsoftware/Dictionary-Swift), 
+[C++](https://github.com/starlangsoftware/Dictionary-CPP), [C](https://github.com/starlangsoftware/Dictionary-C), [Swift](https://github.com/starlangsoftware/Dictionary-Swift), 
 [Java](https://github.com/starlangsoftware/Dictionary), or [C#](https://github.com/starlangsoftware/Dictionary-CS) repository.
 
 ## Requirements
