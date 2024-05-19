@@ -1,7 +1,7 @@
 import { Word } from "../Word";
 import { TxtWord } from "../TxtWord";
 export declare class Trie {
-    private rootNode;
+    private readonly rootNode;
     /**
      * A constructor of {@link Trie} class which creates a new {@link TrieNode} as rootNode.
      */

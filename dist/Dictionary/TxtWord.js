@@ -26,6 +26,9 @@
                 this.addFlag(flag);
             }
         }
+        /**
+         * Clone method that creates a copy of the current TxtWord. Clones the flags array and name property
+         */
         clone() {
             let copy = new TxtWord(this.name);
             for (let i = 0; i < this.flags.length; i++) {
@@ -49,9 +52,17 @@
         removeFlag(flag) {
             this.flags.splice(this.flags.indexOf(flag), 1);
         }
+        /**
+         * Mutator for the inner morphology of the word.
+         * @param morphology New inner morphology of the word.
+         */
         setMorphology(morphology) {
             this.morphology = morphology;
         }
+        /**
+         * Accessor for the inner morphology of the word.
+         * @return Inner morphology of the word.
+         */
         getMorphology() {
             return this.morphology;
         }

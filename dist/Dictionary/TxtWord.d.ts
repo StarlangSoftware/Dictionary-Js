@@ -10,6 +10,9 @@ export declare class TxtWord extends Word {
      * @param flag String input.
      */
     constructor(name: string, flag?: string);
+    /**
+     * Clone method that creates a copy of the current TxtWord. Clones the flags array and name property
+     */
     clone(): TxtWord;
     /**
      * The addFlag method takes a String flag as an input and adds given flag to the flags {@link Array}.
@@ -23,7 +26,15 @@ export declare class TxtWord extends Word {
      * @param flag String input to remove.
      */
     removeFlag(flag: string): void;
+    /**
+     * Mutator for the inner morphology of the word.
+     * @param morphology New inner morphology of the word.
+     */
     setMorphology(morphology: string): void;
+    /**
+     * Accessor for the inner morphology of the word.
+     * @return Inner morphology of the word.
+     */
     getMorphology(): string;
     /**
      * The verbType method checks flags {@link Array} and returns the corresponding cases.

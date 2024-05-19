@@ -4,7 +4,7 @@ import {TxtWord} from "../TxtWord";
 
 export class Trie {
 
-    private rootNode: TrieNode
+    private readonly rootNode: TrieNode
 
     /**
      * A constructor of {@link Trie} class which creates a new {@link TrieNode} as rootNode.

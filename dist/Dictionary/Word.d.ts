@@ -97,6 +97,11 @@ export declare class Word {
      * @return true if it equals to one of the dolar, sterlin, paunt, ons, ruble, mark, frank, yan, sent, yen' or $, and false otherwise.
      */
     static isMoney(surfaceForm: string): boolean;
+    /**
+     * Converts the given string into its capital form
+     * @param surfaceForm Given string which will be converted to its capital form
+     * @return Capitalized form of the input string.
+     */
     static toCapital(surfaceForm: string): string;
     /**
      * The isPunctuation method without any argument, it checks name variable whether it is a punctuation or not and

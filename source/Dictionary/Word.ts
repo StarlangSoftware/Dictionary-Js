@@ -183,6 +183,11 @@ export class Word {
             lowerCase.startsWith("cent") || lowerCase.startsWith("yen'") || lowerCase.includes("$")
     }
 
+    /**
+     * Converts the given string into its capital form
+     * @param surfaceForm Given string which will be converted to its capital form
+     * @return Capitalized form of the input string.
+     */
     static toCapital(surfaceForm: string): string{
         return surfaceForm.substring(0, 1).toLocaleUpperCase("tr") + surfaceForm.substring(1)
     }

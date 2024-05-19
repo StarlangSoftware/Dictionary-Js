@@ -72,6 +72,12 @@
                 }
             }
         }
+        /**
+         * Loads the morphological lexicon of a given language. Only Turkish is currently supported. Morphological lexicon
+         * contains subwords (possibly meaningful words or metamorphemes) of each root word in the Turkish dictionary. For
+         * example, abacılık has subwords aba+CH+LHK.
+         * @param fileName Morphological lexicon file
+         */
         loadMorphologicalLexicon(fileName) {
             let data = fs.readFileSync(fileName, 'utf8');
             let lines = data.split("\n");

@@ -28,6 +28,12 @@
                     word1.getName().localeCompare(word2.getName(), "en")));
             this.comparator = comparator;
         }
+        /**
+         * Checks if a given word exists in the dictionary by performing a binary search on the words array.
+         * @param word Searched word
+         * @return the index of the search word, if it is contained in the words array; otherwise, (-(insertion point) - 1). The
+         * insertion point is defined as the point at which the word would be inserted into the words array.
+         */
         binarySearch(word) {
             let lo = 0;
             let hi = this.words.length - 1;

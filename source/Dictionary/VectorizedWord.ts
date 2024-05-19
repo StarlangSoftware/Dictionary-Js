@@ -3,7 +3,7 @@ import {Word} from "./Word";
 
 export class VectorizedWord extends Word{
 
-    private vector: Vector
+    private readonly vector: Vector
 
     /**
      * A constructor of {@link VectorizedWord} class which takes a String and a {@link Vector} as inputs and calls its

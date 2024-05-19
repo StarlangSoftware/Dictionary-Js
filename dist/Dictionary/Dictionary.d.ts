@@ -12,6 +12,12 @@ export declare class Dictionary {
      */
     constructor(comparator?: WordComparator);
     wordComparator: (comparator: WordComparator) => (word1: Word, word2: Word) => number;
+    /**
+     * Checks if a given word exists in the dictionary by performing a binary search on the words array.
+     * @param word Searched word
+     * @return the index of the search word, if it is contained in the words array; otherwise, (-(insertion point) - 1). The
+     * insertion point is defined as the point at which the word would be inserted into the words array.
+     */
     binarySearch(word: Word): number;
     /**
      * The getWord method takes a String name as an input and performs binary search within words {@link Array} and assigns the result

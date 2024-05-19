@@ -30,6 +30,12 @@ export declare class TxtDictionary extends Dictionary {
      * @param fileName File stream input.
      */
     private loadMisspelledWords;
+    /**
+     * Loads the morphological lexicon of a given language. Only Turkish is currently supported. Morphological lexicon
+     * contains subwords (possibly meaningful words or metamorphemes) of each root word in the Turkish dictionary. For
+     * example, abacılık has subwords aba+CH+LHK.
+     * @param fileName Morphological lexicon file
+     */
     private loadMorphologicalLexicon;
     /**
      * The addNumber method takes a String name and calls addWithFlag method with given name and IS_SAYI flag.
