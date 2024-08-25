@@ -1,6 +1,6 @@
 {
   "name": "nlptoolkit-dictionary",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Turkish Dictionary",
   "main": "index.js",
   "types": "index.js",
@@ -25,6 +25,6 @@
   },
   "dependencies": {
     "nlptoolkit-math": "^1.0.2",
-    "nlptoolkit-util": "^1.0.5"
+    "nlptoolkit-util": "^1.0.10"
   }
 }

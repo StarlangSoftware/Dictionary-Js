@@ -3,6 +3,7 @@ import {Dictionary} from "./Dictionary";
 import * as fs from "fs";
 import {TxtWord} from "./TxtWord";
 import {Trie} from "./Trie/Trie";
+import {FileUtils} from "nlptoolkit-util/dist/FileUtils"
 
 export class TxtDictionary extends Dictionary{
 
@@ -59,14 +60,7 @@ export class TxtDictionary extends Dictionary{
      * @param fileName File stream input.
      */
     private loadMisspelledWords(fileName: string){
-        let data = fs.readFileSync(fileName, 'utf8')
-        let lines = data.split("\n")
-        for (let line of lines){
-            let list = line.split(" ")
-            if (list.length == 2){
-                this.misspelledWords.set(list[0], list[1])
-            }
-        }
+        this.misspelledWords = FileUtils.readHashMap(fileName)
     }
 
     /**

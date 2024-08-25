@@ -4,7 +4,7 @@
         if (v !== undefined) module.exports = v;
     }
     else if (typeof define === "function" && define.amd) {
-        define(["require", "exports", "./WordComparator", "./Dictionary", "fs", "./TxtWord", "./Trie/Trie"], factory);
+        define(["require", "exports", "./WordComparator", "./Dictionary", "fs", "./TxtWord", "./Trie/Trie", "nlptoolkit-util/dist/FileUtils"], factory);
     }
 })(function (require, exports) {
     "use strict";
@@ -15,6 +15,7 @@
     const fs = require("fs");
     const TxtWord_1 = require("./TxtWord");
     const Trie_1 = require("./Trie/Trie");
+    const FileUtils_1 = require("nlptoolkit-util/dist/FileUtils");
     class TxtDictionary extends Dictionary_1.Dictionary {
         /**
          * Another constructor of {@link TxtDictionary} class which takes a String filename, a {@link WordComparator} and
@@ -63,14 +64,7 @@
          * @param fileName File stream input.
          */
         loadMisspelledWords(fileName) {
-            let data = fs.readFileSync(fileName, 'utf8');
-            let lines = data.split("\n");
-            for (let line of lines) {
-                let list = line.split(" ");
-                if (list.length == 2) {
-                    this.misspelledWords.set(list[0], list[1]);
-                }
-            }
+            this.misspelledWords = FileUtils_1.FileUtils.readHashMap(fileName);
         }
         /**
          * Loads the morphological lexicon of a given language. Only Turkish is currently supported. Morphological lexicon
