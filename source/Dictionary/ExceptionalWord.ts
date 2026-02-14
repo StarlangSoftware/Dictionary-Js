@@ -3,8 +3,8 @@ import {Pos} from "./Pos";
 
 export class ExceptionalWord extends Word{
 
-    private root: string
-    private pos: Pos
+    private readonly root: string
+    private readonly pos: Pos
 
     /**
      * A constructor of {@link ExceptionalWord} class which takes a {@link Pos} as a  part of speech and two Strings; name

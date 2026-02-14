@@ -124,7 +124,7 @@
          * @return true if given name is in words {@link Array}, false otherwise.
          */
         addProperNoun(name) {
-            this.addWithFlag(name, "IS_OA");
+            return this.addWithFlag(name, "IS_OA");
         }
         /**
          * The addNoun method takes a String name and calls addWithFlag method with given name and CL_ISIM flag.
@@ -133,7 +133,7 @@
          * @return true if given name is in words {@link Array}, false otherwise.
          */
         addNoun(name) {
-            this.addWithFlag(name, "CL_ISIM");
+            return this.addWithFlag(name, "CL_ISIM");
         }
         /**
          * The addVerb method takes a String name and calls addWithFlag method with given name and CL_FIIL flag.
@@ -142,7 +142,7 @@
          * @return true if given name is in words {@link Array}, false otherwise.
          */
         addVerb(name) {
-            this.addWithFlag(name, "CL_FIIL");
+            return this.addWithFlag(name, "CL_FIIL");
         }
         /**
          * The addAdjective method takes a String name and calls addWithFlag method with given name and IS_ADJ flag.
@@ -151,7 +151,7 @@
          * @return true if given name is in words {@link Array}, false otherwise.
          */
         addAdjective(name) {
-            this.addWithFlag(name, "IS_ADJ");
+            return this.addWithFlag(name, "IS_ADJ");
         }
         /**
          * The addAdverb method takes a String name and calls addWithFlag method with given name and IS_ADVERB flag.
@@ -160,7 +160,7 @@
          * @return true if given name is in words {@link Array}, false otherwise.
          */
         addAdverb(name) {
-            this.addWithFlag(name, "IS_ADVERB");
+            return this.addWithFlag(name, "IS_ADVERB");
         }
         /**
          * The addPronoun method takes a String name and calls addWithFlag method with given name and IS_ZM flag.
@@ -169,7 +169,7 @@
          * @return true if given name is in words {@link Array}, false otherwise.
          */
         addPronoun(name) {
-            this.addWithFlag(name, "IS_ZM");
+            return this.addWithFlag(name, "IS_ZM");
         }
         /**
          * The addWithFlag method takes a String name and a flag as inputs. First it creates a {@link TxtWord} word, then if

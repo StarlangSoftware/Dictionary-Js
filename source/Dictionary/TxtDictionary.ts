@@ -125,8 +125,8 @@ export class TxtDictionary extends Dictionary{
      * @param name String input.
      * @return true if given name is in words {@link Array}, false otherwise.
      */
-    addProperNoun(name: string){
-        this.addWithFlag(name, "IS_OA")
+    addProperNoun(name: string): boolean{
+        return this.addWithFlag(name, "IS_OA")
     }
 
     /**
@@ -135,8 +135,8 @@ export class TxtDictionary extends Dictionary{
      * @param name String input.
      * @return true if given name is in words {@link Array}, false otherwise.
      */
-    addNoun(name: string){
-        this.addWithFlag(name, "CL_ISIM")
+    addNoun(name: string): boolean{
+        return this.addWithFlag(name, "CL_ISIM")
     }
 
     /**
@@ -145,8 +145,8 @@ export class TxtDictionary extends Dictionary{
      * @param name String input.
      * @return true if given name is in words {@link Array}, false otherwise.
      */
-    addVerb(name: string){
-        this.addWithFlag(name, "CL_FIIL")
+    addVerb(name: string): boolean{
+        return this.addWithFlag(name, "CL_FIIL")
     }
 
     /**
@@ -155,8 +155,8 @@ export class TxtDictionary extends Dictionary{
      * @param name String input.
      * @return true if given name is in words {@link Array}, false otherwise.
      */
-    addAdjective(name: string){
-        this.addWithFlag(name, "IS_ADJ")
+    addAdjective(name: string): boolean{
+        return this.addWithFlag(name, "IS_ADJ")
     }
 
     /**
@@ -165,8 +165,8 @@ export class TxtDictionary extends Dictionary{
      * @param name String input.
      * @return true if given name is in words {@link Array}, false otherwise.
      */
-    addAdverb(name: string){
-        this.addWithFlag(name, "IS_ADVERB")
+    addAdverb(name: string): boolean{
+        return this.addWithFlag(name, "IS_ADVERB")
     }
 
     /**
@@ -175,8 +175,8 @@ export class TxtDictionary extends Dictionary{
      * @param name String input.
      * @return true if given name is in words {@link Array}, false otherwise.
      */
-    addPronoun(name: string){
-        this.addWithFlag(name, "IS_ZM")
+    addPronoun(name: string): boolean{
+        return this.addWithFlag(name, "IS_ZM")
     }
 
     /**

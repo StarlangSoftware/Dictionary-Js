@@ -67,42 +67,42 @@ export declare class TxtDictionary extends Dictionary {
      * @param name String input.
      * @return true if given name is in words {@link Array}, false otherwise.
      */
-    addProperNoun(name: string): void;
+    addProperNoun(name: string): boolean;
     /**
      * The addNoun method takes a String name and calls addWithFlag method with given name and CL_ISIM flag.
      *
      * @param name String input.
      * @return true if given name is in words {@link Array}, false otherwise.
      */
-    addNoun(name: string): void;
+    addNoun(name: string): boolean;
     /**
      * The addVerb method takes a String name and calls addWithFlag method with given name and CL_FIIL flag.
      *
      * @param name String input.
      * @return true if given name is in words {@link Array}, false otherwise.
      */
-    addVerb(name: string): void;
+    addVerb(name: string): boolean;
     /**
      * The addAdjective method takes a String name and calls addWithFlag method with given name and IS_ADJ flag.
      *
      * @param name String input.
      * @return true if given name is in words {@link Array}, false otherwise.
      */
-    addAdjective(name: string): void;
+    addAdjective(name: string): boolean;
     /**
      * The addAdverb method takes a String name and calls addWithFlag method with given name and IS_ADVERB flag.
      *
      * @param name String input.
      * @return true if given name is in words {@link Array}, false otherwise.
      */
-    addAdverb(name: string): void;
+    addAdverb(name: string): boolean;
     /**
      * The addPronoun method takes a String name and calls addWithFlag method with given name and IS_ZM flag.
      *
      * @param name String input.
      * @return true if given name is in words {@link Array}, false otherwise.
      */
-    addPronoun(name: string): void;
+    addPronoun(name: string): boolean;
     /**
      * The addWithFlag method takes a String name and a flag as inputs. First it creates a {@link TxtWord} word, then if
      * given name is not in words {@link Array} it creates new {@link TxtWord} with given name and assigns it to
