@@ -1,353 +1,376 @@
-(function (factory) {
-    if (typeof module === "object" && typeof module.exports === "object") {
-        var v = factory(require, exports);
-        if (v !== undefined) module.exports = v;
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
     }
-    else if (typeof define === "function" && define.amd) {
-        define(["require", "exports", "./WordComparator", "./Dictionary", "fs", "./TxtWord", "./Trie/Trie", "nlptoolkit-util/dist/FileUtils"], factory);
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.TxtDictionary = void 0;
+const WordComparator_1 = require("./WordComparator");
+const Dictionary_1 = require("./Dictionary");
+const fs = __importStar(require("fs"));
+const TxtWord_1 = require("./TxtWord");
+const Trie_1 = require("./Trie/Trie");
+const FileUtils_1 = require("nlptoolkit-util/dist/FileUtils");
+class TxtDictionary extends Dictionary_1.Dictionary {
+    misspelledWords = new Map();
+    /**
+     * Another constructor of {@link TxtDictionary} class which takes a String filename, a {@link WordComparator} and
+     * a misspelled word dictionary file as inputs. And calls its super class {@link Dictionary} with given
+     * {@link WordComparator}, assigns given filename input to the filename variable. Then, it calls loadFromText
+     * method with given filename. It also loads the misspelling file.
+     *
+     * @param fileName   String input.
+     * @param comparator {@link WordComparator} input.
+     * @param misspelledFileName String input.
+     * @param morphologicalLexicon String input.
+     */
+    constructor(comparator = WordComparator_1.WordComparator.TURKISH, fileName = "turkish_dictionary.txt", misspelledFileName = "turkish_misspellings.txt", morphologicalLexicon = "turkish_morphological_lexicon.txt") {
+        super(comparator);
+        this.loadFromText(fileName);
+        this.loadMisspelledWords(misspelledFileName);
+        this.loadMorphologicalLexicon(morphologicalLexicon);
     }
-})(function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.TxtDictionary = void 0;
-    const WordComparator_1 = require("./WordComparator");
-    const Dictionary_1 = require("./Dictionary");
-    const fs = require("fs");
-    const TxtWord_1 = require("./TxtWord");
-    const Trie_1 = require("./Trie/Trie");
-    const FileUtils_1 = require("nlptoolkit-util/dist/FileUtils");
-    class TxtDictionary extends Dictionary_1.Dictionary {
-        /**
-         * Another constructor of {@link TxtDictionary} class which takes a String filename, a {@link WordComparator} and
-         * a misspelled word dictionary file as inputs. And calls its super class {@link Dictionary} with given
-         * {@link WordComparator}, assigns given filename input to the filename variable. Then, it calls loadFromText
-         * method with given filename. It also loads the misspelling file.
-         *
-         * @param fileName   String input.
-         * @param comparator {@link WordComparator} input.
-         * @param misspelledFileName String input.
-         * @param morphologicalLexicon String input.
-         */
-        constructor(comparator = WordComparator_1.WordComparator.TURKISH, fileName = "turkish_dictionary.txt", misspelledFileName = "turkish_misspellings.txt", morphologicalLexicon = "turkish_morphological_lexicon.txt") {
-            super(comparator);
-            this.misspelledWords = new Map();
-            this.loadFromText(fileName);
-            this.loadMisspelledWords(misspelledFileName);
-            this.loadMorphologicalLexicon(morphologicalLexicon);
-        }
-        /**
-         * The loadFromText method takes a String filename as an input. It reads given file line by line and splits
-         * according to space and assigns each word to the String array. Then, adds these word with their flags to the
-         * words {@link Array}. At the end it sorts the words {@link Array}.
-         *
-         * @param fileName File input.
-         */
-        loadFromText(fileName) {
-            let data = fs.readFileSync(fileName, 'utf8');
-            let lines = data.split("\n");
-            for (let line of lines) {
-                let list = line.split(" ");
-                if (list.length > 0) {
-                    let currentWord = new TxtWord_1.TxtWord(list[0]);
-                    for (let i = 1; i < list.length; i++) {
-                        currentWord.addFlag(list[i]);
-                    }
-                    this.words.push(currentWord);
+    /**
+     * The loadFromText method takes a String filename as an input. It reads given file line by line and splits
+     * according to space and assigns each word to the String array. Then, adds these word with their flags to the
+     * words {@link Array}. At the end it sorts the words {@link Array}.
+     *
+     * @param fileName File input.
+     */
+    loadFromText(fileName) {
+        let data = fs.readFileSync(fileName, 'utf8');
+        let lines = data.split("\n");
+        for (let line of lines) {
+            let list = line.split(" ");
+            if (list.length > 0) {
+                let currentWord = new TxtWord_1.TxtWord(list[0]);
+                for (let i = 1; i < list.length; i++) {
+                    currentWord.addFlag(list[i]);
                 }
-            }
-            this.words.sort(this.wordComparator(this.comparator));
-        }
-        /**
-         * The loadMisspellWords method takes a String filename as an input. It reads given file line by line and splits
-         * according to space and assigns each word with its misspelled form to the the misspelledWords hashMap.
-         *
-         * @param fileName File stream input.
-         */
-        loadMisspelledWords(fileName) {
-            this.misspelledWords = FileUtils_1.FileUtils.readHashMap(fileName);
-        }
-        /**
-         * Loads the morphological lexicon of a given language. Only Turkish is currently supported. Morphological lexicon
-         * contains subwords (possibly meaningful words or metamorphemes) of each root word in the Turkish dictionary. For
-         * example, abacılık has subwords aba+CH+LHK.
-         * @param fileName Morphological lexicon file
-         */
-        loadMorphologicalLexicon(fileName) {
-            let data = fs.readFileSync(fileName, 'utf8');
-            let lines = data.split("\n");
-            for (let line of lines) {
-                let list = line.split(" ");
-                if (list.length == 2) {
-                    let word = this.getWord(list[0]);
-                    if (word != undefined) {
-                        word.setMorphology(list[1]);
-                    }
-                }
+                this.words.push(currentWord);
             }
         }
-        /**
-         * The addNumber method takes a String name and calls addWithFlag method with given name and IS_SAYI flag.
-         *
-         * @param name String input.
-         */
-        addNumber(name) {
-            this.addWithFlag(name, "IS_SAYI");
+        this.words.sort(this.wordComparator(this.comparator));
+    }
+    /**
+     * The loadMisspellWords method takes a String filename as an input. It reads given file line by line and splits
+     * according to space and assigns each word with its misspelled form to the the misspelledWords hashMap.
+     *
+     * @param fileName File stream input.
+     */
+    loadMisspelledWords(fileName) {
+        this.misspelledWords = FileUtils_1.FileUtils.readHashMap(fileName);
+    }
+    /**
+     * Loads the morphological lexicon of a given language. Only Turkish is currently supported. Morphological lexicon
+     * contains subwords (possibly meaningful words or metamorphemes) of each root word in the Turkish dictionary. For
+     * example, abacılık has subwords aba+CH+LHK.
+     * @param fileName Morphological lexicon file
+     */
+    loadMorphologicalLexicon(fileName) {
+        let data = fs.readFileSync(fileName, 'utf8');
+        let lines = data.split("\n");
+        for (let line of lines) {
+            let list = line.split(" ");
+            if (list.length == 2) {
+                let word = this.getWord(list[0]);
+                if (word != undefined) {
+                    word.setMorphology(list[1]);
+                }
+            }
         }
-        /**
-         * The addRealNumber method takes a String name and calls addWithFlag method with given name and IS_REELSAYI flag.
-         *
-         * @param name String input.
-         */
-        addRealNumber(name) {
-            this.addWithFlag(name, "IS_REELSAYI");
+    }
+    /**
+     * The addNumber method takes a String name and calls addWithFlag method with given name and IS_SAYI flag.
+     *
+     * @param name String input.
+     */
+    addNumber(name) {
+        this.addWithFlag(name, "IS_SAYI");
+    }
+    /**
+     * The addRealNumber method takes a String name and calls addWithFlag method with given name and IS_REELSAYI flag.
+     *
+     * @param name String input.
+     */
+    addRealNumber(name) {
+        this.addWithFlag(name, "IS_REELSAYI");
+    }
+    /**
+     * The addFraction method takes a String name and calls addWithFlag method with given name and IS_KESIR flag.
+     *
+     * @param name String input.
+     */
+    addFraction(name) {
+        this.addWithFlag(name, "IS_KESIR");
+    }
+    /**
+     * The addTime method takes a String name and calls addWithFlag method with given name and IS_ZAMAN flag.
+     *
+     * @param name String input.
+     */
+    addTime(name) {
+        this.addWithFlag(name, "IS_ZAMAN");
+    }
+    /**
+     * The addProperNoun method takes a String name and calls addWithFlag method with given name and IS_OA flag.
+     *
+     * @param name String input.
+     * @return true if given name is in words {@link Array}, false otherwise.
+     */
+    addProperNoun(name) {
+        return this.addWithFlag(name, "IS_OA");
+    }
+    /**
+     * The addNoun method takes a String name and calls addWithFlag method with given name and CL_ISIM flag.
+     *
+     * @param name String input.
+     * @return true if given name is in words {@link Array}, false otherwise.
+     */
+    addNoun(name) {
+        return this.addWithFlag(name, "CL_ISIM");
+    }
+    /**
+     * The addVerb method takes a String name and calls addWithFlag method with given name and CL_FIIL flag.
+     *
+     * @param name String input.
+     * @return true if given name is in words {@link Array}, false otherwise.
+     */
+    addVerb(name) {
+        return this.addWithFlag(name, "CL_FIIL");
+    }
+    /**
+     * The addAdjective method takes a String name and calls addWithFlag method with given name and IS_ADJ flag.
+     *
+     * @param name String input.
+     * @return true if given name is in words {@link Array}, false otherwise.
+     */
+    addAdjective(name) {
+        return this.addWithFlag(name, "IS_ADJ");
+    }
+    /**
+     * The addAdverb method takes a String name and calls addWithFlag method with given name and IS_ADVERB flag.
+     *
+     * @param name String input.
+     * @return true if given name is in words {@link Array}, false otherwise.
+     */
+    addAdverb(name) {
+        return this.addWithFlag(name, "IS_ADVERB");
+    }
+    /**
+     * The addPronoun method takes a String name and calls addWithFlag method with given name and IS_ZM flag.
+     *
+     * @param name String input.
+     * @return true if given name is in words {@link Array}, false otherwise.
+     */
+    addPronoun(name) {
+        return this.addWithFlag(name, "IS_ZM");
+    }
+    /**
+     * The addWithFlag method takes a String name and a flag as inputs. First it creates a {@link TxtWord} word, then if
+     * given name is not in words {@link Array} it creates new {@link TxtWord} with given name and assigns it to
+     * the word and adds given flag to the word, it also add newly created word to the words {@link Array}'s index
+     * found by performing a binary search and return true at the end. If given name is in words {@link Array},
+     * it adds it the given flag to the word.
+     *
+     * @param name String input.
+     * @param flag String flag.
+     * @return true if given name is in words {@link Array}, false otherwise.
+     */
+    addWithFlag(name, flag) {
+        if (this.getWord(name.toLocaleLowerCase("tr")) == undefined) {
+            let word = new TxtWord_1.TxtWord(name.toLocaleLowerCase("tr"));
+            word.addFlag(flag);
+            let insertIndex = -this.binarySearch(word) - 1;
+            if (insertIndex >= 0) {
+                this.words.splice(insertIndex, 0, word);
+            }
+            return true;
         }
-        /**
-         * The addFraction method takes a String name and calls addWithFlag method with given name and IS_KESIR flag.
-         *
-         * @param name String input.
-         */
-        addFraction(name) {
-            this.addWithFlag(name, "IS_KESIR");
-        }
-        /**
-         * The addTime method takes a String name and calls addWithFlag method with given name and IS_ZAMAN flag.
-         *
-         * @param name String input.
-         */
-        addTime(name) {
-            this.addWithFlag(name, "IS_ZAMAN");
-        }
-        /**
-         * The addProperNoun method takes a String name and calls addWithFlag method with given name and IS_OA flag.
-         *
-         * @param name String input.
-         * @return true if given name is in words {@link Array}, false otherwise.
-         */
-        addProperNoun(name) {
-            return this.addWithFlag(name, "IS_OA");
-        }
-        /**
-         * The addNoun method takes a String name and calls addWithFlag method with given name and CL_ISIM flag.
-         *
-         * @param name String input.
-         * @return true if given name is in words {@link Array}, false otherwise.
-         */
-        addNoun(name) {
-            return this.addWithFlag(name, "CL_ISIM");
-        }
-        /**
-         * The addVerb method takes a String name and calls addWithFlag method with given name and CL_FIIL flag.
-         *
-         * @param name String input.
-         * @return true if given name is in words {@link Array}, false otherwise.
-         */
-        addVerb(name) {
-            return this.addWithFlag(name, "CL_FIIL");
-        }
-        /**
-         * The addAdjective method takes a String name and calls addWithFlag method with given name and IS_ADJ flag.
-         *
-         * @param name String input.
-         * @return true if given name is in words {@link Array}, false otherwise.
-         */
-        addAdjective(name) {
-            return this.addWithFlag(name, "IS_ADJ");
-        }
-        /**
-         * The addAdverb method takes a String name and calls addWithFlag method with given name and IS_ADVERB flag.
-         *
-         * @param name String input.
-         * @return true if given name is in words {@link Array}, false otherwise.
-         */
-        addAdverb(name) {
-            return this.addWithFlag(name, "IS_ADVERB");
-        }
-        /**
-         * The addPronoun method takes a String name and calls addWithFlag method with given name and IS_ZM flag.
-         *
-         * @param name String input.
-         * @return true if given name is in words {@link Array}, false otherwise.
-         */
-        addPronoun(name) {
-            return this.addWithFlag(name, "IS_ZM");
-        }
-        /**
-         * The addWithFlag method takes a String name and a flag as inputs. First it creates a {@link TxtWord} word, then if
-         * given name is not in words {@link Array} it creates new {@link TxtWord} with given name and assigns it to
-         * the word and adds given flag to the word, it also add newly created word to the words {@link Array}'s index
-         * found by performing a binary search and return true at the end. If given name is in words {@link Array},
-         * it adds it the given flag to the word.
-         *
-         * @param name String input.
-         * @param flag String flag.
-         * @return true if given name is in words {@link Array}, false otherwise.
-         */
-        addWithFlag(name, flag) {
-            if (this.getWord(name.toLocaleLowerCase("tr")) == undefined) {
-                let word = new TxtWord_1.TxtWord(name.toLocaleLowerCase("tr"));
+        else {
+            let word = this.getWord(name.toLocaleLowerCase("tr"));
+            if (!word.containsFlag(flag)) {
                 word.addFlag(flag);
-                let insertIndex = -this.binarySearch(word) - 1;
-                if (insertIndex >= 0) {
-                    this.words.splice(insertIndex, 0, word);
-                }
-                return true;
+            }
+        }
+        return false;
+    }
+    /**
+     * The getCorrectForm returns the correct form of a misspelled word.
+     * @param misspelledWord Misspelled form.
+     * @return Correct form.
+     */
+    getCorrectForm(misspelledWord) {
+        if (this.misspelledWords.has(misspelledWord)) {
+            return this.misspelledWords.get(misspelledWord);
+        }
+        return undefined;
+    }
+    /**
+     * The addWordWhenRootSoften is used to add word to Trie whose last consonant will be soften.
+     * For instance, in the case of Dative Case Suffix, the word is 'müzik' when '-e' is added to the word, the last
+     * char is drooped and root became 'müzi' and by changing 'k' into 'ğ' the word transformed into 'müziğe' as in the
+     * example of 'Herkes müziğe doğru geldi'.
+     * <p>
+     * In the case of accusative, possessive of third person and a derivative suffix, the word is 'kanat' when '-i' is
+     * added to word, last char is dropped, root became 'kana' then 't' transformed into 'd' and added to Trie. The word is
+     * changed into 'kanadı' as in the case of 'Kuşun kırık kanadı'.
+     *
+     * @param trie the name of the Trie to add the word.
+     * @param last the last char of the word to be soften.
+     * @param root the substring of the word whose last one or two chars are omitted from the word to bo softed.
+     * @param word the original word.
+     */
+    addWordWhenRootSoften(trie, last, root, word) {
+        switch (last) {
+            case "p":
+                trie.addWord(root + 'b', word);
+                break;
+            case "ç":
+                trie.addWord(root + 'c', word);
+                break;
+            case "t":
+                trie.addWord(root + 'd', word);
+                break;
+            case "k":
+            case "g":
+                trie.addWord(root + "ğ", word);
+                break;
+        }
+    }
+    /**
+     * The prepareTrie method is used to create a Trie with the given dictionary. First, it gets the word from dictionary,
+     * then checks some exceptions like 'ben' which does not fit in the consonant softening rule and transforms into 'bana',
+     * and later on it generates a root by removing the last char from the word however if the length of the word is greater
+     * than 1, it also generates the root by removing the last two chars from the word.
+     * <p>
+     * Then, it gets the last char of the root and adds root and word to the result Trie. There are also special cases such as;
+     * lastIdropsDuringSuffixation condition, if it is true then addWordWhenRootSoften method will be used rather than addWord.
+     * Ex : metin + i = metni
+     * isPortmanteauEndingWithSI condition, if it is true then addWord method with rootWithoutLastTwo will be used.
+     * Ex : ademelması + lar = ademelmaları
+     * isPortmanteau condition, if it is true then addWord method with rootWithoutLast will be used.
+     * Ex : mısıryağı + lar = mısıryağları
+     * vowelEChangesToIDuringYSuffixation condition, if it is then addWord method with rootWithoutLast will be used
+     * depending on the last char whether it is 'e' or 'a'.
+     * Ex : ye + iniz - yiyiniz
+     * endingKChangesIntoG condition, if it is true then addWord method with rootWithoutLast will be used with added 'g'.
+     * Ex : ahenk + i = ahengi
+     *
+     * @return the resulting Trie.
+     */
+    prepareTrie() {
+        let result = new Trie_1.Trie();
+        let lastBefore = " ";
+        for (let i = 0; i < this.size(); i++) {
+            let word = this.getWord(i);
+            let root = word.getName();
+            let length = root.length;
+            if (root == "ben") {
+                result.addWord("bana", word);
+            }
+            if (root == "sen") {
+                result.addWord("sana", word);
+            }
+            let rootWithoutLast = root.substring(0, length - 1);
+            let rootWithoutLastTwo;
+            if (length > 1) {
+                rootWithoutLastTwo = root.substring(0, length - 2);
             }
             else {
-                let word = this.getWord(name.toLocaleLowerCase("tr"));
-                if (!word.containsFlag(flag)) {
-                    word.addFlag(flag);
-                }
+                rootWithoutLastTwo = "";
             }
-            return false;
-        }
-        /**
-         * The getCorrectForm returns the correct form of a misspelled word.
-         * @param misspelledWord Misspelled form.
-         * @return Correct form.
-         */
-        getCorrectForm(misspelledWord) {
-            if (this.misspelledWords.has(misspelledWord)) {
-                return this.misspelledWords.get(misspelledWord);
+            if (length > 1) {
+                lastBefore = root.charAt(length - 2);
             }
-            return undefined;
-        }
-        /**
-         * The addWordWhenRootSoften is used to add word to Trie whose last consonant will be soften.
-         * For instance, in the case of Dative Case Suffix, the word is 'müzik' when '-e' is added to the word, the last
-         * char is drooped and root became 'müzi' and by changing 'k' into 'ğ' the word transformed into 'müziğe' as in the
-         * example of 'Herkes müziğe doğru geldi'.
-         * <p>
-         * In the case of accusative, possessive of third person and a derivative suffix, the word is 'kanat' when '-i' is
-         * added to word, last char is dropped, root became 'kana' then 't' transformed into 'd' and added to Trie. The word is
-         * changed into 'kanadı' as in the case of 'Kuşun kırık kanadı'.
-         *
-         * @param trie the name of the Trie to add the word.
-         * @param last the last char of the word to be soften.
-         * @param root the substring of the word whose last one or two chars are omitted from the word to bo softed.
-         * @param word the original word.
-         */
-        addWordWhenRootSoften(trie, last, root, word) {
-            switch (last) {
-                case "p":
-                    trie.addWord(root + 'b', word);
-                    break;
-                case "ç":
-                    trie.addWord(root + 'c', word);
-                    break;
-                case "t":
-                    trie.addWord(root + 'd', word);
-                    break;
-                case "k":
-                case "g":
-                    trie.addWord(root + "ğ", word);
-                    break;
-            }
-        }
-        /**
-         * The prepareTrie method is used to create a Trie with the given dictionary. First, it gets the word from dictionary,
-         * then checks some exceptions like 'ben' which does not fit in the consonant softening rule and transforms into 'bana',
-         * and later on it generates a root by removing the last char from the word however if the length of the word is greater
-         * than 1, it also generates the root by removing the last two chars from the word.
-         * <p>
-         * Then, it gets the last char of the root and adds root and word to the result Trie. There are also special cases such as;
-         * lastIdropsDuringSuffixation condition, if it is true then addWordWhenRootSoften method will be used rather than addWord.
-         * Ex : metin + i = metni
-         * isPortmanteauEndingWithSI condition, if it is true then addWord method with rootWithoutLastTwo will be used.
-         * Ex : ademelması + lar = ademelmaları
-         * isPortmanteau condition, if it is true then addWord method with rootWithoutLast will be used.
-         * Ex : mısıryağı + lar = mısıryağları
-         * vowelEChangesToIDuringYSuffixation condition, if it is then addWord method with rootWithoutLast will be used
-         * depending on the last char whether it is 'e' or 'a'.
-         * Ex : ye + iniz - yiyiniz
-         * endingKChangesIntoG condition, if it is true then addWord method with rootWithoutLast will be used with added 'g'.
-         * Ex : ahenk + i = ahengi
-         *
-         * @return the resulting Trie.
-         */
-        prepareTrie() {
-            let result = new Trie_1.Trie();
-            let lastBefore = " ";
-            for (let i = 0; i < this.size(); i++) {
-                let word = this.getWord(i);
-                let root = word.getName();
-                let length = root.length;
-                if (root == "ben") {
-                    result.addWord("bana", word);
-                }
-                if (root == "sen") {
-                    result.addWord("sana", word);
-                }
-                let rootWithoutLast = root.substring(0, length - 1);
-                let rootWithoutLastTwo;
-                if (length > 1) {
-                    rootWithoutLastTwo = root.substring(0, length - 2);
+            let last = root.charAt(length - 1);
+            result.addWord(root, word);
+            if (word.lastIdropsDuringSuffixation() || word.lastIdropsDuringPassiveSuffixation()) {
+                if (word.rootSoftenDuringSuffixation()) {
+                    this.addWordWhenRootSoften(result, last, rootWithoutLastTwo, word);
                 }
                 else {
-                    rootWithoutLastTwo = "";
-                }
-                if (length > 1) {
-                    lastBefore = root.charAt(length - 2);
-                }
-                let last = root.charAt(length - 1);
-                result.addWord(root, word);
-                if (word.lastIdropsDuringSuffixation() || word.lastIdropsDuringPassiveSuffixation()) {
-                    if (word.rootSoftenDuringSuffixation()) {
-                        this.addWordWhenRootSoften(result, last, rootWithoutLastTwo, word);
-                    }
-                    else {
-                        result.addWord(rootWithoutLastTwo + last, word);
-                    }
-                }
-                // NominalRootNoPossesive
-                if (word.isPortmanteauEndingWithSI()) {
-                    result.addWord(rootWithoutLastTwo, word);
-                }
-                if (word.rootSoftenDuringSuffixation()) {
-                    this.addWordWhenRootSoften(result, last, rootWithoutLast, word);
-                }
-                if (word.isPortmanteau()) {
-                    if (word.isPortmanteauFacedVowelEllipsis()) {
-                        result.addWord(rootWithoutLastTwo + last + lastBefore, word);
-                    }
-                    else {
-                        if (word.isPortmanteauFacedSoftening()) {
-                            switch (lastBefore) {
-                                case 'b':
-                                    result.addWord(rootWithoutLastTwo + 'p', word);
-                                    break;
-                                case 'c':
-                                    result.addWord(rootWithoutLastTwo + 'ç', word);
-                                    break;
-                                case 'd':
-                                    result.addWord(rootWithoutLastTwo + 't', word);
-                                    break;
-                                case 'ğ':
-                                    result.addWord(rootWithoutLastTwo + 'k', word);
-                                    break;
-                            }
-                        }
-                        else {
-                            result.addWord(rootWithoutLast, word);
-                        }
-                    }
-                }
-                if (word.vowelEChangesToIDuringYSuffixation() || word.vowelAChangesToIDuringYSuffixation()) {
-                    switch (last) {
-                        case 'e':
-                            result.addWord(rootWithoutLast, word);
-                            break;
-                        case 'a':
-                            result.addWord(rootWithoutLast, word);
-                            break;
-                    }
-                }
-                if (word.endingKChangesIntoG()) {
-                    result.addWord(rootWithoutLast + 'g', word);
+                    result.addWord(rootWithoutLastTwo + last, word);
                 }
             }
-            return result;
+            // NominalRootNoPossesive
+            if (word.isPortmanteauEndingWithSI()) {
+                result.addWord(rootWithoutLastTwo, word);
+            }
+            if (word.rootSoftenDuringSuffixation()) {
+                this.addWordWhenRootSoften(result, last, rootWithoutLast, word);
+            }
+            if (word.isPortmanteau()) {
+                if (word.isPortmanteauFacedVowelEllipsis()) {
+                    result.addWord(rootWithoutLastTwo + last + lastBefore, word);
+                }
+                else {
+                    if (word.isPortmanteauFacedSoftening()) {
+                        switch (lastBefore) {
+                            case 'b':
+                                result.addWord(rootWithoutLastTwo + 'p', word);
+                                break;
+                            case 'c':
+                                result.addWord(rootWithoutLastTwo + 'ç', word);
+                                break;
+                            case 'd':
+                                result.addWord(rootWithoutLastTwo + 't', word);
+                                break;
+                            case 'ğ':
+                                result.addWord(rootWithoutLastTwo + 'k', word);
+                                break;
+                        }
+                    }
+                    else {
+                        result.addWord(rootWithoutLast, word);
+                    }
+                }
+            }
+            if (word.vowelEChangesToIDuringYSuffixation() || word.vowelAChangesToIDuringYSuffixation()) {
+                switch (last) {
+                    case 'e':
+                        result.addWord(rootWithoutLast, word);
+                        break;
+                    case 'a':
+                        result.addWord(rootWithoutLast, word);
+                        break;
+                }
+            }
+            if (word.endingKChangesIntoG()) {
+                result.addWord(rootWithoutLast + 'g', word);
+            }
         }
+        return result;
     }
-    exports.TxtDictionary = TxtDictionary;
-});
+}
+exports.TxtDictionary = TxtDictionary;
 //# sourceMappingURL=TxtDictionary.js.map

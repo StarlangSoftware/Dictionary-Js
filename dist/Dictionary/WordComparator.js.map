@@ -1,1 +1,1 @@
-{"version":3,"file":"WordComparator.js","sourceRoot":"","sources":["../../source/Dictionary/WordComparator.ts"],"names":[],"mappings":";;;;;;;;;;;;IAAA,IAAY,cAIX;IAJD,WAAY,cAAc;QACtB,yDAAO,CAAA;QACP,yDAAO,CAAA;QACP,iFAAmB,CAAA;IACvB,CAAC,EAJW,cAAc,GAAd,sBAAc,KAAd,sBAAc,QAIzB"}
+{"version":3,"file":"WordComparator.js","sourceRoot":"","sources":["../../source/Dictionary/WordComparator.ts"],"names":[],"mappings":";;;AAAA,IAAY,cAIX;AAJD,WAAY,cAAc;IACtB,yDAAO,CAAA;IACP,yDAAO,CAAA;IACP,iFAAmB,CAAA;AACvB,CAAC,EAJW,cAAc,8BAAd,cAAc,QAIzB"}
