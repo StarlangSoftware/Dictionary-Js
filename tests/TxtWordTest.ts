@@ -97,7 +97,7 @@ describe('TxtWordTest', function() {
                     count++;
                 }
             }
-            assert.strictEqual(9687, count);
+            assert.strictEqual(11006, count);
         });
         it('testIsPronoun', function() {
             let count = 0;
@@ -257,7 +257,7 @@ describe('TxtWordTest', function() {
                     count++;
                 }
             }
-            assert.strictEqual(315, count);
+            assert.strictEqual(320, count);
         });
         it('testObeysAndNotObeysVowelHarmonyDuringAgglutination', function() {
             let count = 0;
@@ -277,7 +277,7 @@ describe('TxtWordTest', function() {
                     count++;
                 }
             }
-            assert.strictEqual(5530, count);
+            assert.strictEqual(6939, count);
         });
         it('testRootSoftenAndNotSoftenDuringSuffixation', function() {
             let count = 0;
@@ -287,7 +287,7 @@ describe('TxtWordTest', function() {
                     count++;
                 }
             }
-            assert.strictEqual(14, count);
+            assert.strictEqual(15, count);
         });
         it('testVerbSoftenDuringSuffixation', function() {
             let count = 0;
@@ -307,7 +307,7 @@ describe('TxtWordTest', function() {
                     count++;
                 }
             }
-            assert.strictEqual(5444, count);
+            assert.strictEqual(6853, count);
         });
         it('testEndingKChangesIntoG', function() {
             let count = 0;
