@@ -47,7 +47,7 @@ describe('TxtWordTest', function() {
                     count++;
                 }
             }
-            assert.strictEqual(30603, count);
+            assert.strictEqual(30625, count);
         });
         it('testIsPassive', function() {
             let count = 0;
